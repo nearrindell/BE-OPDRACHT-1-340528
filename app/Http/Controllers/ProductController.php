@@ -35,10 +35,24 @@ class ProductController extends Controller
         ]);
     }
 
-     public function leverantieInfo()
+     public function leverantieInfo($id)
     {
+        $leveringen = $this->productModel->sp_GetLeverancierInfo($id);
+        $leverancier = $this->productModel->sp_GetLeverantieInfo($id);
+
+        if (!empty($leveringen) && $leveringen[0]->AantalAanwezig == 0) {
+            return view('product.leverantieInfo', [
+                'title' => 'Levering Informatie',
+                'leveringen' => [],
+                'leverancier' => !empty($leverancier) ? $leverancier[0] : null,
+                'nextDelivery' => !empty($leveringen) ? $leveringen[0]->DatumEerstVolgendeLevering : null
+            ]);
+        }
+
         return view('product.leverantieInfo', [
-            'title' => 'Leverantie Informatie'
+            'title' => 'Levering Informatie',
+            'leveringen' => $leveringen,
+            'leverancier' => !empty($leverancier) ? $leverancier[0] : null,
         ]);
     }
 }
