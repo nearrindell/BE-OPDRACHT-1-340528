@@ -10,7 +10,7 @@
     <div class="container d-flex justify-content-center">
 
         <div class="col-md-9">
-
+<br>
             <h1>{{ $title }}</h1>
 
             @if (session('success'))
