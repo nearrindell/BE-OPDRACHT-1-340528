@@ -42,14 +42,14 @@
                                 <form action="{{ route('product.allergenenInfo', $product->Id) }}" method="POST">
                                     @csrf
                                     @method('GET')
-                                    <button type="submit" class="btn btn-danger btn-sm">Allergenen Info</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
                                 </form>
                             </td>
                             <td class="text-center">
                                 <form action="{{ route('product.leverantieInfo', $product->Id) }}" method="POST">
                                     @csrf
                                     @method('GET')
-                                    <button type="submit" class="btn btn-success btn-sm">Leverantie Info</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">?</button>
                                 </form>
                             </td>
                         </tr>
