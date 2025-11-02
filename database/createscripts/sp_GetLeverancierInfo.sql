@@ -22,11 +22,9 @@ BEGIN
 
     INNER JOIN Magazijn AS MAGA
     ON MAGA.ProductId = PROD.Id
-
-    WHERE PROD.Id = p_productId;
-
-
-
+    WHERE PROD.Id = p_productId
+    ORDER BY PPLE.DatumEerstVolgendeLevering ASC;
+    
 END$$
 
 DELIMITER ;
