@@ -45,6 +45,7 @@ class ProductController extends Controller
                 'title' => 'Levering Informatie',
                 'leveringen' => [],
                 'leverancier' => !empty($leverancier) ? $leverancier[0] : null,
+                'noStock' => true,
                 'nextDelivery' => !empty($leveringen) ? $leveringen[0]->DatumEerstVolgendeLevering : null
             ]);
         }
@@ -53,6 +54,7 @@ class ProductController extends Controller
             'title' => 'Levering Informatie',
             'leveringen' => $leveringen,
             'leverancier' => !empty($leverancier) ? $leverancier[0] : null,
+            'noStock' => false
         ]);
     }
 }

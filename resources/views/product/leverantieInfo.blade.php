@@ -4,16 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leverings Informatie</title>
+    <title>{{ $title }}</title>
+
+    @if(!empty($noStock) && $noStock)
+        <script>
+            // redirect na 4 seconden naar terug naar overzicht
+            setTimeout(function() {
+                window.location.href = "{{ route('product.index') }}";
+            }, 4000);
+        </script>
+    @endif
 </head>
 <body>
     <div class="container d-flex justify-content-center">
         <div class="col-md-10">
             <br>
             <h1>{{ $title }}</h1>
-<p class="text-3xl">________________________________________</p>
+            <p class="text-3xl">________________________________________</p>
 
-            <!-- Leverancier info displayed without card -->
+            <!-- leverancier info -->
             @if($leverancier)
                 <div class="mt-4 mb-4">
                     <p><strong>Naam leverancier:</strong> {{ $leverancier->Naam }}</p>
@@ -33,20 +42,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($leveringen as $levering)
+                    @if(!empty($noStock) && $noStock)
+                        <!-- geen voorraad aanwezig melding -->
                         <tr>
-                            <td>{{ $levering->Naam }}</td>
-                            <td class="text-center">{{ date('d-m-Y', strtotime($levering->DatumLevering)) }}</td>
-                            <td class="text-center">{{ $levering->Aantal }}</td>
-                            <td class="text-center">
-                                {{ $levering->DatumEerstVolgendeLevering ? date('d-m-Y', strtotime($levering->DatumEerstVolgendeLevering)) : '-' }}
+                            <td colspan="4" class="text-center text-danger font-medium">
+                                Er is van dit product op dit moment geen voorraad aanwezig,
+                                de verwachte eerstvolgende levering is: 
+                                {{ date('d-m-Y', strtotime($nextDelivery)) }}
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center">Geen leveringen beschikbaar</td>
-                        </tr>
-                    @endforelse
+                    @else
+                        @forelse ($leveringen as $levering)
+                            <tr>
+                                <td>{{ $levering->Naam }}</td>
+                                <td class="text-center">{{ date('d-m-Y', strtotime($levering->DatumLevering)) }}</td>
+                                <td class="text-center">{{ $levering->Aantal }}</td>
+                                <td class="text-center">
+                                    {{ $levering->DatumEerstVolgendeLevering ? date('d-m-Y', strtotime($levering->DatumEerstVolgendeLevering)) : '-' }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">Geen leveringen beschikbaar</td>
+                            </tr>
+                        @endforelse
+                    @endif
                 </tbody>
             </table>
 
