@@ -22,6 +22,13 @@
             <h1>{{ $title }}</h1>
             <p class="text-3xl">________________________________________</p>
 
+            @if($product)
+                <div class="mt-4 mb-4">
+                    <p><strong>Naam:</strong> {{ $product->ProductNaam }}</p>
+                    <p><strong>Barcode:</strong> {{ $product->Barcode }}</p>
+                </div>
+            @endif
+
             <table class="table table-striped table-bordered align-middle shadow-sm">
                 <thead>
                     <tr>
