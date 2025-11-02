@@ -7,25 +7,25 @@ use Illuminate\Support\Facades\DB;
 
 class AllergeenModel extends Model
 {
-
-    public function sp_GetAllAllergenen()
+    public function sp_GetAllergenen() 
     {
-        return DB::select('CALL Sp_GetAllAllergenen');
+        return DB::select('CALL SP_GetAllergenen');
     }
 
     public function sp_CreateAllergeen($name, $description)
     {
         $row = DB::selectOne(
-            'CALL sp_CreateAllergeen(:name, :description)', 
+            'CALL SP_CreateAllergeen(:name, :description)',
             [
-                'name' => $name, 
+                'name' => $name,
                 'description' => $description
             ]
-        );
-        return $row->new_id;
+            
+            );
+            return $row->new_id;
     }
 
-    public function sp_DeleteAllergeen($id)
+     public function sp_DeleteAllergeen($id)
     {
         $result = DB::selectOne(
             'CALL sp_DeleteAllergeen(:id)', 
@@ -54,5 +54,4 @@ class AllergeenModel extends Model
 
         return $row->affected ?? 0;
     }
-
 }

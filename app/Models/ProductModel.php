@@ -21,4 +21,10 @@ class ProductModel extends Model
     {
         return DB::select('CALL sp_GetLeverantieInfo(?)', [$productId]);
     }
+
+    public function sp_GetProductAllergenen($productId)
+    {
+        return DB::select('CALL sp_GetProductAllergenen(?)', [$productId]);
+    }
+
 }

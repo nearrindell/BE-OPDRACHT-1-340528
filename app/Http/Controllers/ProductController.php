@@ -28,12 +28,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function allergenenInfo()
-    {
-        return view('product.allergeenInfo', [
-            'title' => 'Allergeen Informatie'
-        ]);
-    }
+
 
      public function leverantieInfo($id)
     {
@@ -57,4 +52,26 @@ class ProductController extends Controller
             'noStock' => false
         ]);
     }
+
+    public function allergenenInfo($id)
+    {
+        $allergenen = $this->productModel->sp_GetProductAllergenen($id);
+        if (empty($allergenen)) {
+            return view('product.allergeenInfo', [
+                'title' => 'Overzicht Allergenen',
+                'allergenen' => [],
+                'product' => null,
+                'noAllergens' => true
+            ]);
+        }
+
+        return view('product.allergeeninfo', [
+            'title' => 'Overzicht Allergenen',
+            'allergenen' => $allergenen,
+            'product' => $allergenen[0],
+            'noAllergens' => false
+        ]);
+    }
+    
 }
+
