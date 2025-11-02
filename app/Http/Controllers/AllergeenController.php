@@ -11,19 +11,13 @@ class AllergeenController extends Controller
 
     public function __construct()
     {
-        $this->allergeenModel = new AllergeenModel();
+        $this->allergeenModel =  new AllergeenModel();
     }
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $allergenen = $this->allergeenModel->sp_GetAllAllergenen();
+        $allergenen = $this->allergeenModel->sp_GetAllergenen();
 
-        // var_dump($allergenen);
-
-        return view('allergenen.index', [
+        return view('allergenen.index' , [
             'title' => 'Allergenen',
             'allergenen' => $allergenen
         ]);
@@ -44,21 +38,19 @@ class AllergeenController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        // dd($request->all())
 
         $data = $request->validate([
-            'name' => 'required|string|max:50',
-            'description' => 'required|string|max:255'
+            'name'=> 'required|string|max:50',
+            'description'=> 'required|string|max:255'
         ]);
-      
-        $newId = $this->allergeenModel->sp_CreateAllergeen(
-                    $data['name'],
-                    $data['description']
-                );
 
+        $newId = $this-> allergeenModel->sp_CreateAllergeen(
+            $data['name'],
+            $data['description']
+        );
         return redirect()->route('allergeen.index')
-                         ->with('success', "Allergeen is succesvol toegevoegd met id" . $newId);
-        
+                         ->with('success', "allergeen is succesvol toegevoegd met id". $newId);
     }
 
     /**
@@ -75,7 +67,6 @@ class AllergeenController extends Controller
     public function edit($id)
     {
         $allergeen = $this->allergeenModel->sp_GetAllergeenById($id);
-
 
         // Als er geen allergeen bekent met het meegegeven id dan is $allergeen false en wordt er
         // doorverwezen naar de 404 pagina
@@ -123,7 +114,7 @@ class AllergeenController extends Controller
 
         if ($result > 0) {
             return redirect()->route('allergeen.index')
-                             ->with('success', 'Allergeen is succesvol verwijderd.');
+                             ->with('success', 'Allergeen is succesvol verwijdert.');
         }
 
         return redirect()->route('allergeen.index')
